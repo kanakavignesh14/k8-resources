@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
+  namespace: roboshop
   name: multi-container
   labels:
     purpose: multi-container
