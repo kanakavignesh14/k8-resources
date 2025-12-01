@@ -10,7 +10,7 @@ spec:
    - name: resource
      image: nginx
      resources:
-        request:
+        requests:
            memory: "68Mi"
            cpu: "100m" # "1\10th of cpu"
         # give limits cpu and memory more than request or equal    
