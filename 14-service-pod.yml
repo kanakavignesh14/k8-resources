@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: service-demo
+# when creating this pod it need to register with service so anyone came with same labels. 
+#service will direct to this container
+   labels:
+       project: roboshop
+       component: frontend
+       environment: dev
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+     
+  
