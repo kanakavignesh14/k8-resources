@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: ConfigMapPod
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    envFrom:
+        - configMapRef:
+            name:  pod-config-details
+
+
+
+
+
+
+
+
+
+   #The following Pod consumes the content of the ConfigMap as environment variables:
