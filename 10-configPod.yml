@@ -11,12 +11,5 @@ spec:
         - configMapRef:
             name:  pod-config-details
 
-
-
-
-
-
-
-
-
-   #The following Pod consumes the content of the ConfigMap as environment variables:
+#These environment variables are used by the container, not the pod itself.
+#The following Pod fetch the content of the ConfigMap as environment variables:
