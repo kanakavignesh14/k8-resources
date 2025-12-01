@@ -6,7 +6,7 @@ metadata:
 
 spec:
   containers:
-    - #name: error-test
-      #image: nginxx
-      name: almalinux
-      image: almalinux:9
+    #- name: error-test
+    #  image: nginxx
+     - name: almalinux
+       image: almalinux:9
