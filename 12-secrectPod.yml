@@ -1,0 +1,14 @@
+apiVersion: vi
+kind: Pod
+metadata:
+   name: secret-pod
+   
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    envFrom:
+      - secrectRef: 
+          name: pod-secret
+         
