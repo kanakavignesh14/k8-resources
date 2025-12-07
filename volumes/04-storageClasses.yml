@@ -1,0 +1,49 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: roboshop-ebs
+reclaimPolicy: Retain  
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+     purpose: ebs-dynamic
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    volumeMounts:
+    - name: nginx-html # vloume name
+      mountPath: /usr/share/nginx/html # the path in container
+  nodeSelector:
+      topology.kubernetes.io/zone: us-east-1a
+
+  volumes:
+  - name: nginx-html # we use this name at volumeMount
+    persistentVolumeClaim:
+      claimName: roboshop-ebs # this is same as persistemvolumeClaim volume name
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-lb-ebs-dynamic
+
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-dynamic
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007
+      

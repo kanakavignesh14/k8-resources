@@ -23,7 +23,7 @@ metadata:
   name: ebs-static-claim  # we need to give this name to pod at volumes.
 spec:
   storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
-  volumeName: static-pv
+  volumeName: static-pv # we gave here persitent volume name tht will be created first. now we cliaming tht one here
   accessModes:
     - ReadWriteOnce
   resources:
@@ -51,7 +51,7 @@ spec:
   volumes:
   - name: nginx-html # we use this name at volumeMount
     persistentVolumeClaim:
-      claimName: ebs-static-claim 
+      claimName: ebs-static-claim # this is same as persistemvolumeClaim volume name
 
 ---
 
