@@ -33,7 +33,7 @@ spec:
   volumes:
   - name: nginx-html # we use this name at volumeMount
     persistentVolumeClaim:
-      claimName: roboshop-ebs # this is same as persistemvolumeClaim volume name
+      claimName: roboshop-ebs-claim # this is same as persistemvolumeClaim volume name
 
 ---
 
