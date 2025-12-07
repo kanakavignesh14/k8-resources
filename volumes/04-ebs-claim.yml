@@ -27,8 +27,8 @@ spec:
     volumeMounts:
     - name: nginx-html # vloume name
       mountPath: /usr/share/nginx/html # the path in container
-  nodeSelector:
-      topology.kubernetes.io/zone: us-east-1a
+  #nodeSelector:
+  #    topology.kubernetes.io/zone: us-east-1a
 
   volumes:
   - name: nginx-html # we use this name at volumeMount
