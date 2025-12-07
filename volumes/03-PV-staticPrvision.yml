@@ -1,3 +1,6 @@
+# this yml doing ---> creating persistent volume (creating disk) 
+#and claimming tht disk and attaching it to pod tht external disk
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -17,7 +20,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ebs-static-claim
+  name: ebs-static-claim  # we need to give this name to pod at volumes.
 spec:
   storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
   volumeName: static-pv
@@ -26,3 +29,24 @@ spec:
   resources:
     requests:
       storage: 5Gi
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    volumeMounts:
+    - name: nginx-html # vloume name
+      mountPath: /usr/share/nginx/html # the path in container
+  nodeSelector:
+      topology.kubernetes.io/zone: us-east-1a
+
+  volumes:
+  - name: nginx-html # we use this name at volumeMount
+    persistentVolumeClaim:
+      claimName: ebs-static-claim 
