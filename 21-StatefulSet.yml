@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata: 
-   name: nginx-clusterIP-service  # service name
+   name: nginx-clusterip-service  # service name
 
 spec:
   selector:
      purpose: statefulset-demo
-     type: nginx
+     app: nginx
   ports:
      - protocol: TCP
        port: 80 # sevice port
@@ -23,8 +23,48 @@ spec:
   clusterIP: None   # this makes headless service
   selector:
      purpose: statefulset-demo
-     type: nginx
+     app: nginx
   ports:
      - protocol: TCP
        port: 80 # sevice port
        targetPort: 80 # container port   forwart req to another container       
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx-statefulSet
+spec:
+  serviceName: "nginx-headless"    # here we need to give headless service name
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+      purpose: statefulset-demo
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+        purpose: statefulset-demo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "roboshop-ebs"
+      resources:
+        requests:
+          storage: 1Gi       
+
+    # above we doing creating volumes with PVC and sending volume name to voume mount see www      
