@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
    name: deployment-pod
    # these are replica set labels
@@ -22,4 +22,18 @@ spec:
         - name: nginx
           image: nginx     
  
-                  
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+   name: nginx  # service name
+
+
+spec:
+  selector:
+     envronment:  roboshop-dev
+  ports:
+     - protocol: TCP
+       port: 80 # sevice port
+       targetPort: 80 # container port   forwart req to another container

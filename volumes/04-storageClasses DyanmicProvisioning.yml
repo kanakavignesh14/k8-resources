@@ -3,7 +3,7 @@ kind: StorageClass
 metadata:
   name: roboshop-ebs
 reclaimPolicy: Retain  
-provisioner: ebs.csi.aws.com
+provisioner: ebs.csi.aws.com. # this will help to create disk automatically in dynamic provisioning
 volumeBindingMode: WaitForFirstConsumer
 
 
