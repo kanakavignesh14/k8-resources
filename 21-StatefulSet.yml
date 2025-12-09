@@ -1,0 +1,30 @@
+#normal service i.e cluster IP service
+apiVersion: v1
+kind: Service
+metadata: 
+   name: nginx-clusterIP-service  # service name
+
+spec:
+  selector:
+     purpose: statefulset-demo
+     type: nginx
+  ports:
+     - protocol: TCP
+       port: 80 # sevice port
+       targetPort: 80 # container port   forwart req to another container
+
+---
+# this service for headless service
+apiVersion: v1
+kind: Service
+metadata: 
+   name: nginx-headless  # service name
+spec:
+  clusterIP: None   # this makes headless service
+  selector:
+     purpose: statefulset-demo
+     type: nginx
+  ports:
+     - protocol: TCP
+       port: 80 # sevice port
+       targetPort: 80 # container port   forwart req to another container       
