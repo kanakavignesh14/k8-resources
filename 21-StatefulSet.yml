@@ -55,11 +55,11 @@ spec:
         - containerPort: 80
           name: web
         volumeMounts:
-        - name: www
+        - name: www #volume claimed name
           mountPath: /usr/share/nginx/html
   volumeClaimTemplates:
   - metadata:
-      name: www
+      name: www #volume claim name
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "roboshop-ebs"
@@ -67,4 +67,4 @@ spec:
         requests:
           storage: 1Gi       
 
-    # above we doing creating volumes with PVC and sending volume name to voume mount see www      
+    # above we doing creating volumes with PVC claim name and sending volume name to voume mount see www      

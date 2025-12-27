@@ -8,7 +8,7 @@ spec:
   storageClassName: roboshop-ebs
   resources:
     requests:
-      storage: 4Gi
+      storage: 4Gi  # we are providing here how many gb for storage class to create disk
 
 
 ---
@@ -25,18 +25,17 @@ spec:
   - name: nginx
     image: nginx:latest
     volumeMounts:
-    - name: nginx-html # vloume name
+    - name: nginx-html # vloume name we are mounting here
       mountPath: /usr/share/nginx/html # the path in container
   #nodeSelector:
   #    topology.kubernetes.io/zone: us-east-1a
 
-  volumes:
+  volumes: # pvc will bound to pv
   - name: nginx-html # we use this name at volumeMount
     persistentVolumeClaim:
       claimName: roboshop-ebs-claim # this is same as persistemvolumeClaim volume name
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
